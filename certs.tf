@@ -1,8 +1,8 @@
 locals {
   certificate_resources = var.cert_manager_issuer_name == "" ? "" : templatefile("${path.module}/templates/certificates.yaml", {
-    app_name           = local.app_name
-    issuer_name        = var.cert_manager_issuer_name
-    issuer_kind        = var.cert_manager_issuer_kind
+    app_name    = local.app_name
+    issuer_name = var.cert_manager_issuer_name
+    issuer_kind = var.cert_manager_issuer_kind
   })
 }
 
