@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "kiam_server_trust" {
 resource "aws_iam_role" "kiam_server" {
   name               = module.iam_label.id
   tags               = module.iam_label.tags
-  assume_role_policy = data.aws_iam_policy_document.kiam_server_trust.json  
+  assume_role_policy = data.aws_iam_policy_document.kiam_server_trust.json
 }
 
 data "aws_iam_policy_document" "kiam_server" {

@@ -52,7 +52,7 @@ variable "delimiter" {
 variable "cluster_tld" {
   type        = string
   default     = ""
-  description = "The TLD of your cluster domain to automatically guess the master role arn" 
+  description = "The TLD of your cluster domain to automatically guess the master role arn"
 }
 
 variable "aws_account_id" {
