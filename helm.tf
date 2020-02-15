@@ -8,7 +8,7 @@ locals {
   })
 }
 
-resource "helm_repository" "uswitch" {
+data "helm_repository" "uswitch" {
   name = "uswitch"
   url  = "https://uswitch.github.io/kiam-helm-charts/charts/"
 }
