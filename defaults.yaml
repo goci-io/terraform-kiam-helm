@@ -1,0 +1,46 @@
+agent:
+  deepLivenessProbe: true
+
+  tlsCerts:
+    certFileName: tls.crt
+    keyFileName: tls.key
+
+  prometheus:
+    syncInterval: 60s
+    servicemonitor:
+      enabled: true
+      interval: 90s
+
+  resourcs:
+    requests:
+      cpu: 10m
+      memory: 56Mi
+    limits: 
+      cpu: 40m
+      memory: 152Mi
+
+server:
+  # This is to avoid issues with SDK's when
+  # sessions are refreshed 15mins before they expire
+  sessionDuration: 30m
+
+  cache:
+    syncInterval: 2m
+
+  tlsCerts:
+    certFileName: tls.crt
+    keyFileName: tls.key
+
+  prometheus:
+    syncInterval: 30s
+    servicemonitor:
+      enabled: true
+      interval: 60s
+  
+  resources:
+    requests:
+      cpu: 20m
+      memory: 96Mi
+    limits: 
+      cpu: 70m
+      memory: 212Mi

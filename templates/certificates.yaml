@@ -1,0 +1,40 @@
+# The use of certificates managed by cert-manager
+# requires you to have the CRDs of cert-manager installed on your cluster.
+# The helm release contains all necessary resource definitions:
+# https://github.com/goci-io/aws-cert-manager-helm
+
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: ${app_name}-agent
+  namespace: kube-system
+spec:
+  secretName: ${app_name}-agent-tls
+  commonName: agent
+  duration: 2880h
+  issuerRef:
+    kind: ${issuer_kind}
+    name: ${issuer_name}
+  usages:
+  - "any"
+
+---
+
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: ${app_name}-server
+  namespace: kube-system
+spec:
+  secretName: ${app_name}-server-tls
+  duration: 2880h
+  issuerRef:
+    kind: ${issuer_kind}
+    name: ${issuer_name}
+  usages:
+  - "any"
+  dnsNames:
+  - "localhost"
+  - "kiam-server"
+  ipAddresses:
+  - "127.0.0.1"
