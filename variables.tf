@@ -70,7 +70,7 @@ variable "masters_role_arn" {
 variable "assume_role_prefix" {
   type        = string
   default     = ""
-  description = "Prefix of roles kiam will be able to assume"
+  description = "Prefix of roles kiam will be able to assume. Defaults to roles within current account starting with <namespace>-pod-"
 }
 
 variable "cert_manager_issuer_name" {
