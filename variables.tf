@@ -61,6 +61,12 @@ variable "aws_account_id" {
   description = "The AWS Account ID. Required if masters_role_arn is not set. Defaults to current AWS account ID"
 }
 
+variable "aws_assume_role_arn" {
+  type        = string
+  default     = ""
+  description = "Role ARN to assume when creating AWS resources"
+}
+
 variable "masters_role_arn" {
   type        = string
   default     = ""
