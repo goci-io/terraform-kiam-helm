@@ -4,6 +4,7 @@ agent:
   tlsCerts:
     certFileName: tls.crt
     keyFileName: tls.key
+    caFileName: ca.crt
 
   prometheus:
     syncInterval: 60s
@@ -30,6 +31,7 @@ server:
   tlsCerts:
     certFileName: tls.crt
     keyFileName: tls.key
+    caFileName: ca.crt
 
   prometheus:
     syncInterval: 30s
