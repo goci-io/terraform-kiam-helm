@@ -17,7 +17,7 @@ resource "helm_release" "kiam" {
 
   values = [
     file("${path.module}/defaults.yaml"),
-    file("${path.module}/values.yaml"),
+    file("${var.helm_values_root}/values.yaml"),
   ]
 
   set {

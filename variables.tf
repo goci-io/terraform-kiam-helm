@@ -91,3 +91,8 @@ variable "cert_manager_issuer_kind" {
   description = "Kind of the existing cert manager issuer to use. Can be Issuer or ClusterIssuer"
 }
 
+variable "helm_values_root" {
+  type        = string
+  default     = "."
+  description = "Path to the directory containing values.yaml for helm to overwrite any defaults"
+}
