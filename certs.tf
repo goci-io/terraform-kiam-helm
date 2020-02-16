@@ -19,7 +19,7 @@ resource "null_resource" "destroy_certificates" {
   depends_on = [null_resource.apply_certificates]
 
   provisioner "local-exec" {
-    when    = "destroy"
+    when    = destroy
     command = "echo \"${local.certificate_resources}\" | kubectl delete -f - --ignore-not-found"
   }
 }
