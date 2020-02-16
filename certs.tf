@@ -6,7 +6,7 @@ locals {
   })
 }
 
-resource "null_resource" "apply_certs" {
+resource "null_resource" "apply_certificates" {
   count = local.certificate_resources == "" ? 0 : 1
 
   provisioner "local-exec" {
