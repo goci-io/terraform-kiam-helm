@@ -9,7 +9,7 @@ data "helm_repository" "uswitch" {
 
 resource "helm_release" "kiam" {
   depends_on = [null_resource.apply_certs]
-  repository = data.helm_repository.uswitch.name
+  repository = data.helm_repository.uswitch.metadata.0.name
   name       = local.app_name
   chart      = "stable/kiam"
   namespace  = "kube-system"
