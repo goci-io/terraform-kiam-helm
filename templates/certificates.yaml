@@ -3,6 +3,48 @@
 # The helm release contains all necessary resource definitions:
 # https://github.com/goci-io/aws-cert-manager-helm
 
+%{ if deploy_selfsigning_issuer ~}
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: selfsigning-ca
+  namespace: kube-system
+spec:
+  selfSigned: {}
+
+---
+%{ endif ~}
+
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: ${app_name}-ca
+  namespace: kube-system
+spec:
+  secretName: ${app_name}-ca-tls
+  commonName: "${app_name}"
+  isCA: true
+  issuerRef:
+%{ if deploy_selfsigning_issuer ~}
+    name: selfsigning-ca
+%{ else ~}
+    kind: ${issuer_kind}
+    name: ${issuer_name}
+%{ endif ~}
+
+---
+
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: ${app_name}-ca
+  namespace: kube-system
+spec:
+  ca:
+    secretName: ${app_name}-ca-tls
+
+---
+
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
@@ -13,8 +55,7 @@ spec:
   commonName: agent
   duration: 2880h
   issuerRef:
-    kind: ${issuer_kind}
-    name: ${issuer_name}
+    name: ${app_name}-ca
   usages:
   - "any"
 
@@ -27,10 +68,10 @@ metadata:
   namespace: kube-system
 spec:
   secretName: ${app_name}-server-tls
+  commonName: server
   duration: 2880h
   issuerRef:
-    kind: ${issuer_kind}
-    name: ${issuer_name}
+    name: ${app_name}-ca
   usages:
   - "any"
   dnsNames:
