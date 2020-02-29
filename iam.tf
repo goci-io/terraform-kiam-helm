@@ -38,14 +38,8 @@ data "aws_iam_policy_document" "kiam_server" {
     resources = [local.kiam_assume_prefix]
   }
 }
-resource "aws_iam_policy" "server_policy" {
-  name        = module.iam_label.id
-  policy      = data.aws_iam_policy_document.kiam_server.json
-  description = "Policy for the Kiam Server process"
-}
-
-resource "aws_iam_policy_attachment" "server_policy_attach" {
-  name       = module.iam_label.id
-  roles      = [aws_iam_role.kiam_server.name]
-  policy_arn = aws_iam_policy.server_policy.arn
+resource "aws_iam_role_policy" "server_policy" {
+  role   = aws_iam_role.kiam_server.id
+  name   = module.iam_label.id
+  policy = data.aws_iam_policy_document.kiam_server.json
 }
