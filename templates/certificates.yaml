@@ -75,7 +75,7 @@ spec:
   usages:
   - "any"
   dnsNames:
-  - "localhost"
-  - "kiam-server"
+  - "localhost:443"
+  - "kiam-server:443"
   ipAddresses:
   - "127.0.0.1"
