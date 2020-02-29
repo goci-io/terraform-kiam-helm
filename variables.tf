@@ -87,7 +87,7 @@ variable "cert_manager_issuer_name" {
 
 variable "cert_manager_issuer_kind" {
   type        = string
-  default     = "ClusterIssuer"
+  default     = "Issuer"
   description = "Kind of the existing cert manager issuer to use. Can be Issuer or ClusterIssuer"
 }
 
