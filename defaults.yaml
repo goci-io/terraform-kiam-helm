@@ -24,6 +24,7 @@ server:
   # This is to avoid issues with SDK's when
   # sessions are refreshed 15mins before they expire
   sessionDuration: 30m
+  sslCertHostPath: /etc/ssl/certs
 
   cache:
     syncInterval: 2m
