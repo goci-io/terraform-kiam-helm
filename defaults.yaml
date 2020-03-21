@@ -14,17 +14,18 @@ agent:
 
   resourcs:
     requests:
-      cpu: 10m
-      memory: 56Mi
+      cpu: 20m
+      memory: 86Mi
     limits: 
-      cpu: 40m
-      memory: 152Mi
+      cpu: 50m
+      memory: 184Mi
 
 server:
   # This is to avoid issues with SDK's when
   # sessions are refreshed 15mins before they expire
   sessionDuration: 30m
   sslCertHostPath: /etc/ssl/certs
+  gatewayTimeoutCreation: 2s
 
   cache:
     syncInterval: 2m
@@ -42,8 +43,8 @@ server:
   
   resources:
     requests:
-      cpu: 20m
-      memory: 96Mi
+      cpu: 100m
+      memory: 128Mi
     limits: 
-      cpu: 70m
-      memory: 212Mi
+      cpu: 300m
+      memory: 512Mi
