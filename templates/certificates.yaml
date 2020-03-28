@@ -52,7 +52,6 @@ metadata:
   namespace: kube-system
 spec:
   secretName: ${app_name}-agent-tls
-  commonName: agent
   duration: 2880h
   issuerRef:
     name: ${app_name}-ca
@@ -68,15 +67,12 @@ metadata:
   namespace: kube-system
 spec:
   secretName: ${app_name}-server-tls
-  commonName: server
   duration: 2880h
   issuerRef:
     name: ${app_name}-ca
   usages:
   - "any"
   dnsNames:
-  - "localhost:443"
-  - "kiam-server:443"
   - "localhost"
   - "kiam-server"
   ipAddresses:
