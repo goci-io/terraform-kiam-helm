@@ -8,12 +8,13 @@ data "helm_repository" "uswitch" {
 }
 
 resource "helm_release" "kiam" {
-  depends_on = [null_resource.apply_certificates]
-  repository = data.helm_repository.uswitch.metadata.0.name
-  name       = local.app_name
-  namespace  = "kube-system"
-  chart      = "kiam"
-  version    = "5.7.0"
+  depends_on    = [null_resource.apply_certificates]
+  repository    = data.helm_repository.uswitch.metadata.0.name
+  name          = local.app_name
+  namespace     = "kube-system"
+  chart         = "kiam"
+  version       = "5.7.0"
+  recreate_pods = true
 
   values = [
     file("${path.module}/defaults.yaml"),
