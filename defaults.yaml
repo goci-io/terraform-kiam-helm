@@ -31,6 +31,10 @@ server:
   # sessions are refreshed 15mins before they expire
   sessionDuration: 30m
   gatewayTimeoutCreation: 1s
+  
+  deployment:
+    enabled: true
+    replicas: 3
 
   cache:
     syncInterval: 2m
