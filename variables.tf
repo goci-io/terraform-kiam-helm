@@ -79,6 +79,12 @@ variable "assume_role_prefix" {
   description = "Prefix of roles kiam will be able to assume. Defaults to roles within current account starting with <namespace>-pod-"
 }
 
+variable "iam_role_name_override" {
+  type        = string
+  default     = ""
+  description = "Overrides the IAM role name to use for cert-manager DNS challanges with Route53"
+}
+
 variable "cert_manager_issuer_name" {
   type        = string
   default     = ""
