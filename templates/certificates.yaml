@@ -22,7 +22,7 @@ metadata:
   namespace: kube-system
 spec:
   secretName: ${app_name}-ca-tls
-  commonName: "${app_name}"
+  commonName: ${app_name}
   isCA: true
   issuerRef:
 %{ if deploy_selfsigning_issuer ~}
@@ -52,7 +52,7 @@ metadata:
   namespace: kube-system
 spec:
   secretName: ${app_name}-agent-tls
-  commonName: kiam
+  commonName: kiam-agent
   duration: 2880h
   issuerRef:
     name: ${app_name}-ca
@@ -66,8 +66,7 @@ metadata:
   namespace: kube-system
 spec:
   secretName: ${app_name}-server-tls
-  duration: 2880h
-  commonName: kiam
+  commonName: kiam-server
   issuerRef:
     name: ${app_name}-ca
   dnsNames:
@@ -76,5 +75,3 @@ spec:
     - localhost
     - localhost:443
     - localhost:9610
-  ipAddresses:
-    - 127.0.0.1
