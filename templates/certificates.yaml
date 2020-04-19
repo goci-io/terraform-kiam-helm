@@ -73,7 +73,7 @@ spec:
   dnsNames:
     - kiam-server
     - kiam-server:443
-    - localhost"
+    - localhost
     - localhost:443
     - localhost:9610
   ipAddresses:
