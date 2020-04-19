@@ -15,7 +15,7 @@ resource "null_resource" "apply_certificates" {
     command = "echo \"${local.certificate_resources}\" | kubectl apply -f -"
   }
   
-  triggers {
+  triggers = {
     hash = md5(local.certificate_resources)
   }
 }
