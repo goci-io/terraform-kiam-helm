@@ -53,7 +53,10 @@ metadata:
 spec:
   secretName: ${app_name}-agent-tls
   commonName: kiam-agent
-  duration: 2880h
+  usages:
+  - "key encipherment"
+  - "digital signature"
+  - "server auth"
   issuerRef:
     name: ${app_name}-ca
 
@@ -67,6 +70,10 @@ metadata:
 spec:
   secretName: ${app_name}-server-tls
   commonName: kiam-server
+  usages:
+  - "key encipherment"
+  - "digital signature"
+  - "server auth"
   issuerRef:
     name: ${app_name}-ca
   dnsNames:
@@ -75,3 +82,5 @@ spec:
     - localhost
     - localhost:443
     - localhost:9610
+  ipAddresses:
+    - 127.0.0.1
