@@ -14,6 +14,10 @@ resource "null_resource" "apply_certificates" {
   provisioner "local-exec" {
     command = "echo \"${local.certificate_resources}\" | kubectl apply -f -"
   }
+  
+  triggers {
+    hash = md5(local.certificate_resources)
+  }
 }
 
 resource "null_resource" "destroy_certificates" {
