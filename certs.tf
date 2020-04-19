@@ -2,6 +2,7 @@ locals {
   cert_resources_required = var.deploy_selfsigning_issuer || var.cert_manager_issuer_name != ""
   certificate_resources   = !local.cert_resources_required ? "" : templatefile("${path.module}/templates/certificates.yaml", {
     app_name                  = local.app_name
+    namespace                 = var.namespace
     deploy_selfsigning_issuer = var.deploy_selfsigning_issuer && var.cert_manager_issuer_name == ""
     issuer_kind               = var.cert_manager_issuer_kind
     issuer_name               = var.cert_manager_issuer_name

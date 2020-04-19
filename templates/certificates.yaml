@@ -31,6 +31,10 @@ spec:
     kind: ${issuer_kind}
     name: ${issuer_name}
 %{ endif ~}
+  usages: 
+  - "cert sign"
+  organization:
+  - "${namespace}"
 
 ---
 
@@ -53,12 +57,12 @@ metadata:
 spec:
   secretName: ${app_name}-agent-tls
   commonName: kiam-agent
-  usages:
-  - "key encipherment"
-  - "digital signature"
-  - "server auth"
   issuerRef:
     name: ${app_name}-ca
+  usages:
+  - "key encipherment"
+  - "server auth"
+  - "client auth"
 
 ---
 
@@ -70,17 +74,14 @@ metadata:
 spec:
   secretName: ${app_name}-server-tls
   commonName: kiam-server
-  usages:
-  - "key encipherment"
-  - "digital signature"
-  - "server auth"
   issuerRef:
     name: ${app_name}-ca
   dnsNames:
-    - kiam-server
-    - kiam-server:443
-    - localhost
-    - localhost:443
-    - localhost:9610
+  - "localhost"
+  - "kiam-server"
   ipAddresses:
-    - 127.0.0.1
+  - 127.0.0.1
+  usages:
+  - "key encipherment"
+  - "server auth"
+  - "client auth"
