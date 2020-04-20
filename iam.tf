@@ -33,7 +33,7 @@ resource "aws_iam_role" "kiam_server" {
   count              = var.server_iam_role_arn == "" ? 1 : 0
   name               = local.iam_role_name
   tags               = module.iam_label.tags
-  assume_role_policy = data.aws_iam_policy_document.kiam_server_trust.json
+  assume_role_policy = join("", data.aws_iam_policy_document.kiam_server_trust.*.json)
 }
 
 data "aws_iam_policy_document" "kiam_server" {
