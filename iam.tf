@@ -6,6 +6,7 @@ locals {
   iam_role_name            = var.iam_role_name_override == "" ? module.iam_label.id : var.iam_role_name_override
   aws_account_id           = coalesce(var.aws_account_id, data.aws_caller_identity.current.account_id)
   masters_role_arn         = coalesce(var.masters_role_arn, local.default_masters_role_arn)
+  server_iam_role_arn      = coalesce(join("", aws_iam_role.kiam_server.*.id), var.server_iam_role_arn)
 }
 
 module "iam_label" {
@@ -15,6 +16,8 @@ module "iam_label" {
 }
 
 data "aws_iam_policy_document" "kiam_server_trust" {
+  count = var.server_iam_role_arn == "" ? 1 : 0
+
   statement {
     effect  = "Allow"
     actions = ["sts:AssumeRole"]
@@ -27,6 +30,7 @@ data "aws_iam_policy_document" "kiam_server_trust" {
 }
 
 resource "aws_iam_role" "kiam_server" {
+  count              = var.server_iam_role_arn == "" ? 1 : 0
   name               = local.iam_role_name
   tags               = module.iam_label.tags
   assume_role_policy = data.aws_iam_policy_document.kiam_server_trust.json
@@ -39,8 +43,9 @@ data "aws_iam_policy_document" "kiam_server" {
     resources = [local.kiam_assume_prefix]
   }
 }
+
 resource "aws_iam_role_policy" "server_policy" {
-  role   = aws_iam_role.kiam_server.id
+  role   = local.server_iam_role_arn
   name   = module.iam_label.id
   policy = data.aws_iam_policy_document.kiam_server.json
 }

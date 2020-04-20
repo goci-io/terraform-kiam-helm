@@ -85,6 +85,12 @@ variable "iam_role_name_override" {
   description = "Overrides the IAM role name to use for cert-manager DNS challanges with Route53"
 }
 
+variable "server_iam_role_arn" {
+  type        = string
+  default     = ""
+  description = "Existing IAM role to use. We will only attach a policy which will allow to assume prefixed roles"
+}
+
 variable "cert_manager_issuer_name" {
   type        = string
   default     = ""

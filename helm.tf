@@ -33,6 +33,6 @@ resource "helm_release" "kiam" {
 
   set {
     name  = "server.assumeRoleArn"
-    value = aws_iam_role.kiam_server.arn
+    value = local.server_iam_role_arn
   }
 }
