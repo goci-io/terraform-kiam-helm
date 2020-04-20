@@ -6,7 +6,9 @@ locals {
   iam_role_name            = var.iam_role_name_override == "" ? module.iam_label.id : var.iam_role_name_override
   aws_account_id           = coalesce(var.aws_account_id, data.aws_caller_identity.current.account_id)
   masters_role_arn         = coalesce(var.masters_role_arn, local.default_masters_role_arn)
-  server_iam_role_arn      = coalesce(join("", aws_iam_role.kiam_server.*.id), var.server_iam_role_arn)
+  server_iam_role_arn      = coalesce(join("", aws_iam_role.kiam_server.*.arn), var.server_iam_role_arn)
+  server_iam_role_id       = coalesce(join("", aws_iam_role.kiam_server.*.id), local.server_role_parts[length(local.server_role_parts) - 1])
+  server_role_parts        = split("/", var.server_iam_role_arn)
 }
 
 module "iam_label" {
@@ -45,7 +47,7 @@ data "aws_iam_policy_document" "kiam_server" {
 }
 
 resource "aws_iam_role_policy" "server_policy" {
-  role   = local.server_iam_role_arn
+  role   = local.server_iam_role_id
   name   = module.iam_label.id
   policy = data.aws_iam_policy_document.kiam_server.json
 }
