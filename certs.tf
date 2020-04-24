@@ -1,6 +1,6 @@
 locals {
   cert_resources_required = var.deploy_selfsigning_issuer || var.cert_manager_issuer_name != ""
-  certificate_resources   = !local.cert_resources_required ? "" : templatefile("${path.module}/templates/certificates.yaml", {
+  certificate_resources = ! local.cert_resources_required ? "" : templatefile("${path.module}/templates/certificates.yaml", {
     app_name                  = local.app_name
     namespace                 = var.namespace
     deploy_selfsigning_issuer = var.deploy_selfsigning_issuer && var.cert_manager_issuer_name == ""
@@ -15,7 +15,7 @@ resource "null_resource" "apply_certificates" {
   provisioner "local-exec" {
     command = "echo \"${local.certificate_resources}\" | kubectl apply -f -"
   }
-  
+
   triggers = {
     hash = md5(local.certificate_resources)
   }
