@@ -36,7 +36,7 @@ server:
 
   deployment:
     enabled: true
-    replicas: 3
+    replicas: ${server_replicas}
 
   cache:
     syncInterval: 2m

@@ -17,7 +17,9 @@ resource "helm_release" "kiam" {
   recreate_pods = true
 
   values = [
-    file("${path.module}/defaults.yaml"),
+    templatefile("${path.module}/defaults.yaml", {
+      server_replicas = var.server_replicas
+    }),
     file("${var.helm_values_root}/values.yaml"),
   ]
 
