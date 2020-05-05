@@ -49,6 +49,12 @@ variable "delimiter" {
   description = "Delimiter to be used between `namespace`, `stage`, `name` and `attributes`"
 }
 
+variable "server_replicas" {
+  type        = number
+  default     = 3
+  description = "Number of replicas for the kiam-server deployment"
+}
+
 variable "cluster_tld" {
   type        = string
   default     = ""
