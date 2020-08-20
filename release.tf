@@ -14,7 +14,7 @@ resource "helm_release" "kiam" {
   name          = local.app_name
   namespace     = "kube-system"
   chart         = "kiam"
-  version       = "5.7.0"
+  version       = "5.10.0"
   recreate_pods = true
 
   values = [
