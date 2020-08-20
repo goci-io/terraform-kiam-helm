@@ -1,8 +1,9 @@
 data "aws_caller_identity" "current" {}
 
 locals {
+  default_assume_role      = format("arn:aws:iam::%s:role/%s-*", local.aws_account_id, var.namespace))
+  kiam_assume_roles        = length(var.assume_roles) < 1 ? [local.default_assume_role] : var.assume_roles
   default_masters_role_arn = format("arn:aws:iam::%s:role/masters.%s.%s.%s.%s", local.aws_account_id, var.stage, var.region, var.namespace, var.cluster_tld)
-  kiam_assume_prefix       = coalesce(var.assume_role_prefix, format("arn:aws:iam::%s:role/%s-*-pod-*", local.aws_account_id, var.namespace))
   iam_role_name            = var.iam_role_name_override == "" ? module.iam_label.id : var.iam_role_name_override
   aws_account_id           = coalesce(var.aws_account_id, data.aws_caller_identity.current.account_id)
   masters_role_arn         = coalesce(var.masters_role_arn, local.default_masters_role_arn)
@@ -42,7 +43,7 @@ data "aws_iam_policy_document" "kiam_server" {
   statement {
     effect    = "Allow"
     actions   = ["sts:AssumeRole"]
-    resources = [local.kiam_assume_prefix]
+    resources = local.kiam_assume_roles
   }
 }
 

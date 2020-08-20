@@ -73,10 +73,10 @@ variable "masters_role_arn" {
   description = "Instance role of masters in your kubernetes cluster. Defaults to masters.<stage>.<region>.<namespace>.<cluster_tld>"
 }
 
-variable "assume_role_prefix" {
-  type        = string
-  default     = ""
-  description = "Prefix of roles kiam will be able to assume. Defaults to roles within current account starting with <namespace>-pod-"
+variable "assume_roles" {
+  type        = list(string)
+  default     = []
+  description = "Role ARNs to allow Kiam to assume"
 }
 
 variable "iam_role_name_override" {
