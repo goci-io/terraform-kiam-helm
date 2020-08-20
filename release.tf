@@ -1,5 +1,6 @@
 locals {
-  app_name = coalesce(var.app_name, var.name)
+  app_name            = coalesce(var.app_name, var.name)
+  overwrite_file_path = "${var.helm_values_root}/values.yaml"
 }
 
 data "helm_repository" "uswitch" {
@@ -20,7 +21,7 @@ resource "helm_release" "kiam" {
     templatefile("${path.module}/defaults.yaml", {
       server_replicas = var.server_replicas
     }),
-    file("${var.helm_values_root}/values.yaml"),
+    fileexists(local.overwrite_file_path) ? file(local.overwrite_file_path) : "",
   ]
 
   set {
